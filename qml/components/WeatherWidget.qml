@@ -6,7 +6,7 @@ import Atoll
 Item {
     id: root
 
-    readonly property bool enabled: Cfg.get("idle.showWeather", true)
+    readonly property bool weatherEnabled: Cfg.get("idle.showWeather", true)
     property string weatherText: ""
     property bool loaded: false
     property var cachedLat: null
@@ -14,7 +14,7 @@ Item {
 
     implicitWidth: row.implicitWidth
     implicitHeight: row.implicitHeight
-    visible: enabled && weatherText.length > 0
+    visible: weatherEnabled && weatherText.length > 0
 
     Row {
         id: row
@@ -64,7 +64,7 @@ Item {
     }
 
     function refresh() {
-        if (!enabled) {
+        if (!weatherEnabled) {
             weatherText = ""
             return
         }
@@ -123,7 +123,7 @@ Item {
         id: timer
         interval: 900000 // 15 mins
         repeat: true
-        running: root.enabled
+        running: root.weatherEnabled
         triggeredOnStart: true
         onTriggered: root.refresh()
     }
